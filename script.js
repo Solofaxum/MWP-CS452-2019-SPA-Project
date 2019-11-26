@@ -44,17 +44,15 @@ window.onload = function singlePageApp() {
     }
     function addListener({ page }) {
         if (page === 'login') {
-            document.querySelector('button').addEventListener('click, loginFunction')
+            document.querySelector('button').addEventListener('click, loginFunction');
         }
         if (page === 'animation') {
-            document.querySelector('#refresh').addEventListener('click, fitchAnimation')
-            document.querySelector('#logout').addEventListener('click, fitchAnimation')
+            document.querySelector('#refresh').addEventListener('click, fitchAnimation');
+            document.querySelector('#logout').addEventListener('click, fitchAnimation');
         }
     }
-function loginFunction(){
-    
-    
-}
+function loginFunction(
+
 }
 
 
