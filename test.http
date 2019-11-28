@@ -12,3 +12,5 @@ content-type: application/json
 
 GET  http://www.mumstudents.org/api/animation HTTP/1.1
 Authorization: Bearer {{token}}
+
+
