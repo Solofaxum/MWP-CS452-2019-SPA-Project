@@ -1,28 +1,23 @@
 
 
 window.onload = function singlePageApp() {
-    let picAni = `
-    
-     o
-    /#\
-    _|_
-   =====
-    \o/
-     #
-   _/ \_
-    `;
-    let framesLength;
-    let tokenn, animationId;
-    let myLocation = "O3z20eyf8ZaJpI88gkhQQbhe2MpIo1lC";
 
-    const logInPage = `
+
+    let animationId;
+    //my location API key
+    let myLocation = "O3z20eyf8ZaJpI88gkhQQbhe2MpIo1lC";
+    let tokenn = `eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtd2EiLCJpc3N1ZWRBdCI6IjIwMTktMTEtMjciLCJ1c2VybmFtZSI6Im13cCJ9.U9ciwh5lcPwFlJdxhNQkeiMc7AMYAnawfKNidw8CNDpTIUjNBL_EtDqkXG4qGOF8H_Ve1S2Gg2PwmCYOkfgmWA`
+
+
+    const loginTemp = `<div id="center" rows="30" cols="50" stayle = "font-size:10px">
     <link rel="stylesheet" href="css.css">
        <h1> Please login</h1>
        User name: <input type="text" id="userName" value="mwp"><br><br>
        Password: <input type= "text" id= "password" value= "123"><br><br>
-       <input type="button" id="Login1" value="LogIn"">`
+       <input type="button" id="Login1" value="LogIn""></div>`
 
-    const myAnimation = `
+
+    const animationTemp = `
     <link rel="stylesheet" href="css.css">
     <h1 id= "animation"> </h1>
     <div class ="animate-page"> The World of Animation: Click Refresh and Enjoy! </div>
@@ -30,15 +25,15 @@ window.onload = function singlePageApp() {
     <button type="button" id="animationn"  >Refresh</button>
     <input type="button" id="Logg" value="LogOut">`
 
-    const myDiv = document.querySelector("#outlet");
-    myDiv.innerHTML = logInPage;
 
-    let log = document.querySelector("#Login1");
-    log.addEventListener("click", login);
+    const mainDiv = document.querySelector("#outlet");
+    mainDiv.innerHTML = loginTemp;
 
+    let callLog = document.querySelector("#Login1");
+    callLog.addEventListener("click", login);
+//login Page
     function login() {
-
-        myDiv.innerHTML = myAnimation;
+        mainDiv.innerHTML = animationTemp;
         logOutFunc();
         fetchLocation()
         fitchLoging()
@@ -47,34 +42,16 @@ window.onload = function singlePageApp() {
 
     function logFunc() {
 
-        myDiv.innerHTML = logInPage;
+        mainDiv.innerHTML = loginTemp;
         animationss();
     }
 
     function logOutFunc() {
-        const frames = picAni.split('=====')
-        const framesLength = frames.length;
-        let currentFrame = 0;
-
+        
         const logout = document.querySelector("#Logg");
         logout.addEventListener("click", logFunc);
 
-
-        document.getElementById("animationn").addEventListener("click", function () {
-            console.log(fitchAnimation());
-            fitchAnimation().then(reso => {
-                const frames = reso.split('=====\n')
-                const framesLength = frames.length;
-                let currentFrame = 0;
-                animationId = setInterval(() => {
-                    document.querySelector('#animationView').value = frames[currentFrame];
-                    currentFrame++;
-                    if (currentFrame === framesLength)
-                        currentFrame = 0;
-                }, 200)
-            });
-
-        });
+        document.getElementById("animationn").addEventListener("click", animationArray);
 
     }
 
@@ -95,7 +72,7 @@ window.onload = function singlePageApp() {
             const country = response.results[0].locations[0].adminArea1;
             const zipCode = response.results[0].locations[0].postalCode;
 
-            let outPut = `Well Come all from ${city} , ${state}, ${country}, ${zipCode}`;
+            let outPut = `Welcome all from ${city} , ${state}, ${country}!`;
             let result = document.querySelector("#animation");
             result.innerHTML = outPut;
 
@@ -117,15 +94,12 @@ window.onload = function singlePageApp() {
                     "username": "mwp",
                     "password": "123"
                 })
-
             });
+
         const respData = await response.json();
         const myToken = respData.token;
-
+        console.log(myToken);
     }
-
-
-    tokenn = `eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtd2EiLCJpc3N1ZWRBdCI6IjIwMTktMTEtMjciLCJ1c2VybmFtZSI6Im13cCJ9.U9ciwh5lcPwFlJdxhNQkeiMc7AMYAnawfKNidw8CNDpTIUjNBL_EtDqkXG4qGOF8H_Ve1S2Gg2PwmCYOkfgmWA`
 
     async function fitchAnimation() {
         if (animationId) clearInterval(animationId);
@@ -140,8 +114,24 @@ window.onload = function singlePageApp() {
         const animation = await response.text();
         console.log(animation);
         return animation;
-
     }
+
+
+    function animationArray() {
+        console.log(fitchAnimation());
+        fitchAnimation().then(animate => {
+            const frames = animate.split('=====\n')
+            const framesLength = frames.length;
+            let currentFrame = 0;
+            animationId = setInterval(() => {
+                document.querySelector('#animationView').value = frames[currentFrame];
+                currentFrame++;
+                if (currentFrame === framesLength)
+                    currentFrame = 0;
+            }, 200)
+        });
+
+    };
 
 }
 

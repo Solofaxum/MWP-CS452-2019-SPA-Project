@@ -1,13 +1,23 @@
-h1 {
-	text-align: center;
-}
-#outlet {
+body{
     text-align: center;
-    background-color: darkcyan;
+    background-image: url(main.jfif);
+    
 }
-#animate-page {
-text-align: center;
-background-color: darkmagenta;
+
+h1 {
+    text-align-last: center;
+    text-decoration-style: dashed;
+}
+
+#animationView {
+    background-image: url(ocean.jfif);
+background-size: 1300px;
 
 }
+#center{
+    border-block: 1000px x 23px;
+    border-block-end-width: 400px;
+    border-block-end-color: rgb(65, 175, 50);
+}
+
 
