@@ -1,6 +1,8 @@
 body{
     text-align: center;
-    background-image: url(main.jfif);
+    color: rgb(220, 235, 14);
+    background-image: url(city.jfif);
+    background-size: 1500px;
     
 }
 
@@ -11,13 +13,8 @@ h1 {
 
 #animationView {
     background-image: url(ocean.jfif);
-background-size: 1300px;
+background-size: 1350px;
 
-}
-#center{
-    border-block: 1000px x 23px;
-    border-block-end-width: 400px;
-    border-block-end-color: rgb(65, 175, 50);
 }
 
 

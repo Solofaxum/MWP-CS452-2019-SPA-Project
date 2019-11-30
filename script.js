@@ -4,19 +4,24 @@ window.onload = function singlePageApp() {
 
 
     let animationId;
-    //my location API key
+    //personal API locationlocation API key
     let myLocation = "O3z20eyf8ZaJpI88gkhQQbhe2MpIo1lC";
+    //Token state id: indicator of user correctly logged in or not.
     let tokenn = `eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtd2EiLCJpc3N1ZWRBdCI6IjIwMTktMTEtMjciLCJ1c2VybmFtZSI6Im13cCJ9.U9ciwh5lcPwFlJdxhNQkeiMc7AMYAnawfKNidw8CNDpTIUjNBL_EtDqkXG4qGOF8H_Ve1S2Gg2PwmCYOkfgmWA`
 
 
+
+    //Login page (default) “/”
     const loginTemp = `<div id="center" rows="30" cols="50" stayle = "font-size:10px">
     <link rel="stylesheet" href="css.css">
        <h1> Please login</h1>
-       User name: <input type="text" id="userName" value="mwp"><br><br>
-       Password: <input type= "text" id= "password" value= "123"><br><br>
+       Username: <input type="text" id="userName" value="mwp"><br><br>
+       Password: <input type= "text" id= "passWord" value= "123"><br><br>
        <input type="button" id="Login1" value="LogIn""></div>`
 
 
+
+    //Animation page “/animation
     const animationTemp = `
     <link rel="stylesheet" href="css.css">
     <h1 id= "animation"> </h1>
@@ -26,35 +31,38 @@ window.onload = function singlePageApp() {
     <input type="button" id="Logg" value="LogOut">`
 
 
+
+    //login template creation in 
     const mainDiv = document.querySelector("#outlet");
     mainDiv.innerHTML = loginTemp;
 
     let callLog = document.querySelector("#Login1");
     callLog.addEventListener("click", login);
-//login Page
+    //login function
     function login() {
         mainDiv.innerHTML = animationTemp;
         logOutFunc();
-        fetchLocation()
-        fitchLoging()
+        fetchLocation();
+        fitchLoging();
         fitchAnimation();
     }
 
     function logFunc() {
-
+        clearInterval(animationId)
         mainDiv.innerHTML = loginTemp;
-        animationss();
-    }
 
+    }
+    //log out function
     function logOutFunc() {
-        
+
         const logout = document.querySelector("#Logg");
         logout.addEventListener("click", logFunc);
-
+        //fitchLoging()
         document.getElementById("animationn").addEventListener("click", animationArray);
 
     }
 
+    //fetching geolocation API Key
     async function fetchLocation() {
         navigator.geolocation.getCurrentPosition(success, fail)
 
@@ -70,7 +78,7 @@ window.onload = function singlePageApp() {
             const city = response.results[0].locations[0].adminArea5;
             const state = response.results[0].locations[0].adminArea3;
             const country = response.results[0].locations[0].adminArea1;
-            const zipCode = response.results[0].locations[0].postalCode;
+
 
             let outPut = `Welcome all from ${city} , ${state}, ${country}!`;
             let result = document.querySelector("#animation");
@@ -82,6 +90,8 @@ window.onload = function singlePageApp() {
         }
     }
 
+
+    //login status state: whether users are logged in or not
     async function fitchLoging() {
 
         let response = await fetch('http://mumstudents.org/api/login',
@@ -101,8 +111,10 @@ window.onload = function singlePageApp() {
         console.log(myToken);
     }
 
+
+    //fetching the available Animation ID with the help of personal users token.
     async function fitchAnimation() {
-        if (animationId) clearInterval(animationId);
+        clearInterval(animationId);
         const response = await fetch('http://mumstudents.org/api/animation',
             {
                 method: "GET",
@@ -117,7 +129,10 @@ window.onload = function singlePageApp() {
     }
 
 
+
+    // changing available Datas in to separated array and animate with settime interval
     function animationArray() {
+        clearInterval(animationId);
         console.log(fitchAnimation());
         fitchAnimation().then(animate => {
             const frames = animate.split('=====\n')
@@ -132,6 +147,7 @@ window.onload = function singlePageApp() {
         });
 
     };
+
 
 }
 
