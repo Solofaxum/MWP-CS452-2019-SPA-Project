@@ -12,34 +12,37 @@ window.onload = function singlePageApp() {
 
 
     //Login page (default) “/”
-    const loginTemp = `<div id="center" rows="30" cols="50" stayle = "font-size:10px">
-    <link rel="stylesheet" href="css.css">
+    const loginTemp = `
+       <div id="center" rows="30" cols="50" stayle = "font-size:10px">
+       <link rel="stylesheet" href="css.css">
        <h1> Please login</h1>
-       Username: <input type="text" id="userName" value="mwp"><br><br>
-       Password: <input type= "text" id= "passWord" value= "123"><br><br>
+       Username: <input type="text" id="userName" value="mwp" placeholder="Enter your username"><br><br>
+       Password: <input type= "text" id= "passWord" value= "123" placeholder="Enter your password"><br><br>
        <input type="button" id="Login1" value="LogIn""></div>`
 
 
 
     //Animation page “/animation
     const animationTemp = `
-    <link rel="stylesheet" href="css.css">
-    <h1 id= "animation"> </h1>
-    <div class ="animate-page"> The World of Animation: Click Refresh and Enjoy! </div>
-    <textarea id = "animationView"  rows="30" cols="50" stayle = "font-size:10px"></textarea><br>
-    <button type="button" id="animationn"  >Refresh</button>
-    <input type="button" id="Logg" value="LogOut">`
+         <link rel="stylesheet" href="css.css">
+         <h1 id= "animation"> </h1>
+         <div class ="animate-page"> The World of Animation: Click Refresh and Enjoy! </div>
+         <textarea id = "animationView"  rows="30" cols="50" stayle = "font-size:10px"></textarea><br>
+         <button type="button" id="animationn"  >Refresh</button>
+         <input type="button" id="Logg" value="LogOut">`
 
 
 
-    //login template creation in 
+    //login template creation 
     const mainDiv = document.querySelector("#outlet");
     mainDiv.innerHTML = loginTemp;
 
+    //add listner to login button
     let callLog = document.querySelector("#Login1");
     callLog.addEventListener("click", login);
     //login function
     function login() {
+
         mainDiv.innerHTML = animationTemp;
         logOutFunc();
         fetchLocation();
@@ -47,26 +50,30 @@ window.onload = function singlePageApp() {
         fitchAnimation();
     }
 
+    //back to login page and using addlistner to go back again to animation page
     function logFunc() {
+
         clearInterval(animationId)
         mainDiv.innerHTML = loginTemp;
-
+        let callLog = document.querySelector("#Login1");
+        callLog.addEventListener("click", login);
     }
-    //log out function
+    
+    //add listner to logout button and refresh button
     function logOutFunc() {
 
         const logout = document.querySelector("#Logg");
         logout.addEventListener("click", logFunc);
-        //fitchLoging()
         document.getElementById("animationn").addEventListener("click", animationArray);
-
     }
 
     //fetching geolocation API Key
     async function fetchLocation() {
+
         navigator.geolocation.getCurrentPosition(success, fail)
 
         async function success(position) {
+
             console.log(position);
 
             const Longitude = position.coords.longitude;
@@ -85,7 +92,8 @@ window.onload = function singlePageApp() {
             result.innerHTML = outPut;
 
         }
-        function fail() {
+
+        async function fail() {
             document.querySelector("#animation").innerHTML = `Well Come anonymous`;
         }
     }

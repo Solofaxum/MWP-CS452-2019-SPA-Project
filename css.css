@@ -3,7 +3,7 @@ body{
     color: rgb(220, 235, 14);
     background-image: url(city.jfif);
     background-size: 1500px;
-    
+    padding: 50px;
 }
 
 h1 {
@@ -16,5 +16,8 @@ h1 {
 background-size: 1350px;
 
 }
-
+#Login1, #animationn, #Logg{
+color: rgb(14, 13, 13);
+background-color: lawngreen;
+}
 
