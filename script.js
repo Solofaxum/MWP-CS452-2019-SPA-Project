@@ -48,17 +48,18 @@ window.onload = function singlePageApp() {
         fetchLocation();
         fitchLoging();
         fitchAnimation();
+        document.getElementById("animationn").addEventListener("click", animationArray);
     }
 
     //back to login page and using addlistner to go back again to animation page
     function logFunc() {
 
-        clearInterval(animationId)
+        clearInterval(animationId);
         mainDiv.innerHTML = loginTemp;
         let callLog = document.querySelector("#Login1");
         callLog.addEventListener("click", login);
     }
-    
+
     //add listner to logout button and refresh button
     function logOutFunc() {
 
@@ -75,7 +76,7 @@ window.onload = function singlePageApp() {
         async function success(position) {
 
             console.log(position);
-
+            //finding personal location position
             const Longitude = position.coords.longitude;
             const Latitude = position.coords.latitude;
 
@@ -122,7 +123,7 @@ window.onload = function singlePageApp() {
 
     //fetching the available Animation ID with the help of personal users token.
     async function fitchAnimation() {
-        clearInterval(animationId);
+
         const response = await fetch('http://mumstudents.org/api/animation',
             {
                 method: "GET",
@@ -140,6 +141,7 @@ window.onload = function singlePageApp() {
 
     // changing available Datas in to separated array and animate with settime interval
     function animationArray() {
+        //clear the setInterval time
         clearInterval(animationId);
         console.log(fitchAnimation());
         fitchAnimation().then(animate => {
@@ -155,8 +157,6 @@ window.onload = function singlePageApp() {
         });
 
     };
-
-
 }
 
 
