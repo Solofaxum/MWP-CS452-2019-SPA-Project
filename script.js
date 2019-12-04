@@ -3,7 +3,7 @@
 window.onload = function singlePageApp() {
 
 
-    let animationId;
+    let animationId, pass, user;
     //personal API locationlocation API key
     let myLocation = "O3z20eyf8ZaJpI88gkhQQbhe2MpIo1lC";
     //Token state id: indicator of user correctly logged in or not.
@@ -11,18 +11,18 @@ window.onload = function singlePageApp() {
 
 
 
-    //Login page (default) “/”
+    //Login page 
     const loginTemp = `
        <div id="center" rows="30" cols="50" stayle = "font-size:10px">
        <link rel="stylesheet" href="css.css">
        <h1> Please login</h1>
-       Username: <input type="text" id="userName" value="mwp" placeholder="Enter your username"><br><br>
-       Password: <input type= "text" id= "passWord" value= "123" placeholder="Enter your password"><br><br>
+       Username: <input type="text" id="userName" placeholder="Enter your username"><br><br>
+       Password: <input type= "text" id= "passWord" placeholder="Enter your password"><br><br>
        <input type="button" id="Login1" value="LogIn""></div>`
 
 
 
-    //Animation page “/animation
+    //Animation page 
     const animationTemp = `
          <link rel="stylesheet" href="css.css">
          <h1 id= "animation"> </h1>
@@ -42,13 +42,21 @@ window.onload = function singlePageApp() {
     callLog.addEventListener("click", login);
     //login function
     function login() {
+        user = document.getElementById("userName").value;
+        pass = document.getElementById('passWord').value;
+        if (user === 'mwp' && pass === '123') {
+            alert("you are logedin")
+            mainDiv.innerHTML = animationTemp;
+            history.pushState(loginTemp, "title", "index.html")
 
-        mainDiv.innerHTML = animationTemp;
-        logOutFunc();
-        fetchLocation();
-        fitchLoging();
-        fitchAnimation();
-        document.getElementById("animationn").addEventListener("click", animationArray);
+            logOutFunc();
+            fetchLocation();
+            fitchLoging();
+            fitchAnimation();
+            document.getElementById("animationn").addEventListener("click", animationArray);
+        } else {
+            alert('user name or password is not correct')
+        }
     }
 
     //back to login page and using addlistner to go back again to animation page
@@ -58,6 +66,7 @@ window.onload = function singlePageApp() {
         mainDiv.innerHTML = loginTemp;
         let callLog = document.querySelector("#Login1");
         callLog.addEventListener("click", login);
+        history.pushState(loginTemp, "title", "index.html")
     }
 
     //add listner to logout button and refresh button
@@ -146,6 +155,7 @@ window.onload = function singlePageApp() {
         console.log(fitchAnimation());
         fitchAnimation().then(animate => {
             const frames = animate.split('=====\n')
+            history.pushState(frames, document.title, "index.html")
             const framesLength = frames.length;
             let currentFrame = 0;
             animationId = setInterval(() => {
@@ -157,6 +167,22 @@ window.onload = function singlePageApp() {
         });
 
     };
+
+    //adding rout contron system
+    window.addEventListener("popstate", () => {
+        let currentFrame = 0;
+        clearInterval(animationId);
+        animationId = setInterval(() => {
+            document.querySelector('#animationView').value = history.state[currentFrame];
+            currentFrame++;
+            if (currentFrame === framesLength)
+                currentFrame = 0;
+        }, 200)
+
+    })
+    
+
+
 }
 
 
