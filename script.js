@@ -21,7 +21,6 @@ window.onload = function singlePageApp() {
        <input type="button" id="Login1" value="LogIn""></div>`
 
 
-
     //Animation page 
     const animationTemp = `
          <link rel="stylesheet" href="css.css">
@@ -32,7 +31,6 @@ window.onload = function singlePageApp() {
          <input type="button" id="Logg" value="LogOut">`
 
 
-
     //login template creation 
     const mainDiv = document.querySelector("#outlet");
     mainDiv.innerHTML = loginTemp;
@@ -40,25 +38,34 @@ window.onload = function singlePageApp() {
     //add listner to login button
     let callLog = document.querySelector("#Login1");
     callLog.addEventListener("click", login);
+    logFunc()
     //login function
     function login() {
+        //securing the login page
         user = document.getElementById("userName").value;
         pass = document.getElementById('passWord').value;
         if (user === 'mwp' && pass === '123') {
             alert("you are logedin")
             mainDiv.innerHTML = animationTemp;
-            history.pushState(loginTemp, "title", "index.html")
-
+            //handling the history changes
+            history.pushState({loginTemp:1}, "title", "index.html")
+            window.addEventListener("popstate", function(event){
+                if (event.state.loginTemp===1){
+                    clearInterval(animationId)
+                    logFunc()
+            }
+        })
             logOutFunc();
             fetchLocation();
             fitchLoging();
-            fitchAnimation();
+            animationArray();
+           fitchAnimation();
             document.getElementById("animationn").addEventListener("click", animationArray);
         } else {
             alert('user name or password is not correct')
+        
         }
     }
-
     //back to login page and using addlistner to go back again to animation page
     function logFunc() {
 
@@ -89,14 +96,11 @@ window.onload = function singlePageApp() {
             const Longitude = position.coords.longitude;
             const Latitude = position.coords.latitude;
 
-
             let response = await fetch(`http://open.mapquestapi.com/geocoding/v1/reverse?key=${myLocation}&location=${Latitude},${Longitude}&includeRoadMetadata=true&includeNearestIntersection=true`)
             response = await response.json()
             const city = response.results[0].locations[0].adminArea5;
             const state = response.results[0].locations[0].adminArea3;
             const country = response.results[0].locations[0].adminArea1;
-
-
             let outPut = `Welcome all from ${city} , ${state}, ${country}!`;
             let result = document.querySelector("#animation");
             result.innerHTML = outPut;
@@ -147,7 +151,6 @@ window.onload = function singlePageApp() {
     }
 
 
-
     // changing available Datas in to separated array and animate with settime interval
     function animationArray() {
         //clear the setInterval time
@@ -180,8 +183,6 @@ window.onload = function singlePageApp() {
         }, 200)
 
     })
-    
-
 
 }
 
